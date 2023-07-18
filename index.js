@@ -7,7 +7,6 @@ import bodyParser from "body-parser"
 import dotenv from "dotenv"
 
 const app = express()
-const PORT = 3000
 
 //the hidden url in the .env file
 dotenv.config()
@@ -37,6 +36,4 @@ mongoose.connect(URL).then(async () => {
 
 /*  EXPRESS APP SERVER  */
 
-app.listen(PORT, () =>
-  console.log(`server is up and running on http://localhost:${PORT}`)
-)
+app.listen(process.env.PORT || 3000, () => console.log(`server is up and running`))

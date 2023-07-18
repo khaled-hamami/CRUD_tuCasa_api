@@ -1,5 +1,5 @@
-import postModel from "../models/postModel.js"
-import userModel from "../models/userModel.js"
+import postModel from "../../models/postModel.js"
+import userModel from "../../models/userModel.js"
 
 const createPost = async (req, res) => {
   try {
