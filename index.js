@@ -24,6 +24,8 @@ app.get("/", (req, res) => {
   res.status(200).send("server is working")
 })
 
+app.use("/users", userRouter)
+app.use("/posts", postRouter)
 /*  DATABASE  */
 mongoose
   .connect(URL)
@@ -31,8 +33,6 @@ mongoose
     console.log("Database connected")
 
     // MIDDLEWARES AS ROUTES
-    app.use("/users", userRouter)
-    app.use("/posts", postRouter)
   })
   .then(
     /*  EXPRESS APP SERVER // must be in the db connect  call back function  for "cyclic" hosting service  */
