@@ -10,7 +10,7 @@ const app = express()
 
 //the hidden url in the .env file
 dotenv.config()
-const URL = process.env.MONGO_URL_KEY || null
+const URL = process.env.MONGO_URL_KEY
 
 /*  MIDDLEWARES */
 app.use(cors())
@@ -25,9 +25,8 @@ app.get("/", (req, res) => {
 })
 
 /*  DATABASE  */
-mongoose.set('strictQuery',false)
 mongoose
-  .connect(process.env.MONGO_URI || URL)
+  .connect(URL)
   .then(async () => {
     console.log("Database connected")
 
