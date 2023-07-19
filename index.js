@@ -10,7 +10,7 @@ const app = express()
 
 //the hidden url in the .env file
 dotenv.config()
-const URL = process.env.MONGO_URL_KEY
+const URL = process.env.MONGO_URL_KEY || null
 
 /*  MIDDLEWARES */
 app.use(cors())
@@ -25,15 +25,20 @@ app.get("/", (req, res) => {
 })
 
 /*  DATABASE  */
+mongoose.set('strictQuery',false)
+mongoose
+  .connect(process.env.MONGO_URI || URL)
+  .then(async () => {
+    console.log("Database connected")
 
-mongoose.connect(URL).then(async () => {
-  console.log("Database connected")
+    // MIDDLEWARES AS ROUTES
+    app.use("/users", userRouter)
+    app.use("/posts", postRouter)
+  })
+  .then(
+    /*  EXPRESS APP SERVER // must be in the db connect  call back function  for "cyclic" hosting service  */
 
-  // MIDDLEWARES AS ROUTES
-  app.use("/users", userRouter)
-  app.use("/posts", postRouter)
-})
-
-/*  EXPRESS APP SERVER  */
-
-app.listen(process.env.PORT || 3000, () => console.log(`server is up and running`))
+    app.listen(process.env.PORT || 3000, () =>
+      console.log(`server is up and running`)
+    )
+  )
