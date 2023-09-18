@@ -20,6 +20,7 @@ app.use(express.json())
 
 /*  ESTABLISHING CONNECTION */
 
+/* MIDDLEWARES AS ROUTES  / routes must here (outside the callback mongo function)  for 'cyclic'   */
 app.get("/", (req, res) => {
   res.status(200).send("server is working")
 })
@@ -31,8 +32,6 @@ mongoose
   .connect(URL)
   .then(async () => {
     console.log("Database connected")
-
-    // MIDDLEWARES AS ROUTES
   })
   .then(
     /*  EXPRESS APP SERVER // must be in the db connect  call back function  for "cyclic" hosting service  */
