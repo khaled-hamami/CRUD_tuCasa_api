@@ -9,15 +9,15 @@ const deletePost = async (req, res) => {
     //to delete the post from its posts
 
     const post = await postModel.findOne({ _id: postId })
-    if (!post) throw new Error("unable to find post")
+    if (!post) throw new Error("Impossible de trouver la publication")
     const { userId } = post
-    if (!userId) throw new Error("Something went wrong !")
+    if (!userId) throw new Error("Une erreur s'est produite !")
     await postModel.findOneAndDelete({ _id: postId })
     await userModel.findOneAndUpdate(
       { _id: userId },
       { $pull: { PostsIds: postId } }
     )
-    res.status(200).json({ message: "deleted" })
+    res.status(200).json({ message: "Publication supprimée avec succès" })
   } catch (err) {
     res.status(401).json({ message: err.message })
     console.log(err)

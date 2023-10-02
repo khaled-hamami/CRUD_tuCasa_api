@@ -12,11 +12,14 @@ const createUser = async (req, res) => {
     //must hash the password
     res
       .status(201)
-      .json({ status: " User created successfully", payload: newUser })
+      .json({ status: " Utilisateur créé avec succès", payload: newUser })
   } catch (err) {
     res
       .status(500)
-      .json({ status: "failed to create User", error: err.message })
+      .json({
+        status: "Échec de la création de l'utilisateur",
+        error: err.message,
+      })
   }
 }
 export default createUser

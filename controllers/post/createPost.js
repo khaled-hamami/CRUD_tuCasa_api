@@ -25,13 +25,16 @@ const createPost = async (req, res) => {
 
     //must hash the password
     res.status(201).json({
-      status: " Post created successfully",
+      status: "Publication créée avec succès",
       payload: { delegation: newPost.delegation, price: newPost.price },
     })
   } catch (err) {
     res
       .status(500)
-      .json({ status: "failed to create Post", payload: err.message })
+      .json({
+        status: "Échec de la création de la publication",
+        payload: err.message,
+      })
   }
 }
 export default createPost
