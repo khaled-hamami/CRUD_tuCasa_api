@@ -7,7 +7,7 @@ const login = async (req, res) => {
     })
 
     if (!user) {
-      throw new Error("L'utilisateur n'existe pas")
+      throw new Error("Email ou mot de passe incorrect")
     }
 
     if (req.body.password !== user.password) {
@@ -16,17 +16,7 @@ const login = async (req, res) => {
 
     res.status(200).json({ status: "Utilisateur trouvé", payload: user })
   } catch (err) {
-    let errorMessage = ""
-
-    if (err.message === "L'utilisateur n'existe pas") {
-      errorMessage = "Utilisateur non trouvé"
-    } else if (err.message === "Mot de passe incorrect") {
-      errorMessage = "Mot de passe incorrect"
-    } else {
-      errorMessage = "Erreur inattendue"
-    }
-
-    res.status(404).json({ status: errorMessage, error: err.message })
+    res.status(400).json(err.message || "Erreur inattendue")
   }
 }
 
